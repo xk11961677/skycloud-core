@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#从阿里云下载镜像
+#停止运行中镜像,删除运行的镜像
+#启动新的镜像
+
+ms_project_name=ms-config
+
+project_name=skycloud-core-config
+
+project_version=1.0.0-SNAPSHOT
+
+registry=registry.cn-hangzhou.aliyuncs.com/zyk
+
+run_id='docker ps $ms_project_name'
+
+image='docker ps -a | grep $ms_project_name'
+
+if [ run_id != ''  ]; then
+    echo ' run_id stop '
+    docker stop $ms_project_name
+fi;
+
+if [ image != '' ]; then
+    echo ' image rm '
+    docker rm $ms_project_name
+fi;
+
+
+docker run --name $ms_project_name -d -p 8888:8888 -e BOOT_ARGS='-Dspring.cloud.config.server.native.searchLocations=/www/data/cloud/config' -e TZ='Asia/Shanghai' -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime -v /www/data/cloud/config:/www/data/cloud/config $registry/$project_name:$project_version
