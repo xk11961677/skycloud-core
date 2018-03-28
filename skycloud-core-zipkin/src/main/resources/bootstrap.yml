@@ -5,7 +5,7 @@ spring:
     active: ${CONFIG_PROFILE:dev}
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}/config
+      uri: ${CONFIG_SERVICE_URL:http://localhost:8888}/config
 
 server:
   port: 9411
