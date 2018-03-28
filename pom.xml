@@ -17,6 +17,10 @@
     <modules>
         <module>skycloud-core-config</module>
         <module>skycloud-core-eureka</module>
+        <module>skycloud-core-monitor</module>
+        <module>skycloud-core-dashboard</module>
+        <module>skycloud-core-turbine</module>
+        <module>skycloud-core-zipkin</module>
     </modules>
 
     <properties>
@@ -24,15 +28,45 @@
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>zyk</docker.registry.name>
         <java.version>1.8</java.version>
+
+        <spring-boot-admin-starter-server>1.5.7</spring-boot-admin-starter-server>
+        <hystrix-dashboard.version>1.5.7</hystrix-dashboard.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
+            <!-- spring boot admin  -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin-starter-server}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-login</artifactId>
+                <version>1.5.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+                <version>${hystrix-dashboard.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+                <version>${hystrix-dashboard.version}</version>
+            </dependency>
+            <!-- spring boot admin  -->
+
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.SR5</version>
+                <version>Edgware.SR1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

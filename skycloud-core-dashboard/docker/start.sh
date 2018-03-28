@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ms_project_name=ms-eureka
+ms_project_name=ms-dashboard
 
-project_name=skycloud-core-eureka
+project_name=skycloud-core-dashboard
 
 project_version=1.0.0-SNAPSHOT
 
@@ -16,8 +16,7 @@ docker rmi -f registry.cn-hangzhou.aliyuncs.com/zyk/$project_name:$project_versi
 
 sudo docker login --username=username --password=password registry.cn-hangzhou.aliyuncs.com
 
-
-docker run --name $ms_project_name -d -p 8761:8761 -e TZ='Asia/Shanghai' -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime $registry/$project_name:$project_version
+docker run --name $ms_project_name -d -p 8789:8789 -e TZ='Asia/Shanghai' -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime $registry/$project_name:$project_version
 
 docker rmi $(docker images | grep '<none>' |awk '{print $3}')
 

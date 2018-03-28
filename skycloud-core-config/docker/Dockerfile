@@ -1,6 +1,6 @@
 FROM java:8
 
-MAINTAINER tx
+MAINTAINER sky
 
 ENV BOOT_ARGS=""
 
