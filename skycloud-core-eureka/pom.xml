@@ -58,7 +58,7 @@
                 <version>1.4.2.RELEASE</version>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>com.skycloud.core.config.ConfigApplication</mainClass>
+                    <mainClass>com.skycloud.core.eureka.EurekaApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
