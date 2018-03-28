@@ -3,12 +3,8 @@ server:
 spring:
   application:
     name: eureka
+  profiles:
+    active: ${CONFIG_PROFILE:dev}
   cloud:
     config:
       uri: ${CONFIG_SERVICE_URL:http://localhost:8888}/config
-      name: eureka
-      profile: default
-
-management:
-  security:
-    enabled: false

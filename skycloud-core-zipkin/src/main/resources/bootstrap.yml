@@ -1,19 +1,21 @@
 spring:
   application:
     name: zipkin
+  profiles:
+    active: ${CONFIG_PROFILE:dev}
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888}/config
 
 server:
   port: 9411
   
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
 #  instance:
 #    preferIpAddress: true
 #    ipAddress:  127.0.0.1
 
-management:
-  security:
-    enabled: false

@@ -1,19 +1,19 @@
-spring:
-  application:
-    name: turbine
-  cloud:
-    config:
-      uri: ${CONFIG_SERVICE_URL:http://localhost:8888}/config
-      name: turbine
-      profile: default
-
 server:
   port: 8778
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+spring:
+  application:
+    name: turbine
+  profiles:
+    active: ${CONFIG_PROFILE:dev}
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URL:http://localhost:8888}/config
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
 #  instance:
 #    preferIpAddress: true
 #    ipAddress:  127.0.0.1
@@ -27,6 +27,3 @@ turbine:
 sucurity:
   basic:
     enable: false
-management:
-  security:
-    enabled: false
