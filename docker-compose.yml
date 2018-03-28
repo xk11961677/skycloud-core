@@ -37,7 +37,7 @@ services:
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8761
+      - BOOT_ARGS=-DEUREKA_SERVICE_URL=http://10.28.60.163:8761
       - TZ=Asia/Shanghai
     restart: always
     networks:
