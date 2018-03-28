@@ -1,0 +1,88 @@
+version: '2'
+services:
+  ms-config:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-config
+    ports:
+      - "8888:8888"
+    volumes:
+      - /www/data/cloud/config:/www/data/cloud/config
+    environment:
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-Dspring.cloud.config.server.native.searchLocations=/www/data/cloud/config
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      - front-tier
+      - back-tier
+
+  ms-eureka:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-eureka
+    ports:
+      - "8761:8761"
+    depends_on:
+          - ms-config
+    environment:
+      - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      - back-tier
+
+  ms-monitor:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-monitor
+    ports:
+      - "8788:8788"
+    depends_on:
+      - ms-eureka
+    environment:
+      - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      - front-tier
+      - back-tier
+
+  ms-dashboard:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-dashboard
+    ports:
+      - "8789:8789"
+    depends_on:
+      - ms-eureka
+    environment:
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
+      - TZ=Asia/Shanghai
+    networks:
+      - front-tier
+      - back-tier
+
+  ms-turbine:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-turbine
+    ports:
+      - "8778:8778"
+    depends_on:
+      - ms-eureka
+    environment:
+      - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - TZ=Asia/Shanghai
+    networks:
+      - front-tier
+      - back-tier
+
+  ms-zipkin:
+    image: registry.cn-hangzhou.aliyuncs.com/zyk/skycloud-core-zipkin
+    ports:
+      - "9411:9411"
+    depends_on:
+      - ms-eureka
+    environment:
+      - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - TZ=Asia/Shanghai
+    networks:
+      - front-tier
+      - back-tier
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
