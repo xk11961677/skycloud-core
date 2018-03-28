@@ -32,13 +32,14 @@ eureka:
     metadata-map:
       user.name: ${security.user.name}
       user.password: ${security.user.password}
+    preferIpAddress: true
+    ip-address: ${SERVER_IP:127.0.0.1}
+    hostname: ${SERVER_HOST_NAME:localhost}
   client:
     registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
-#    instance:
-#      preferIpAddress: true
-#      ipAddress:  127.0.0.1
+
 
 management:
   security:
