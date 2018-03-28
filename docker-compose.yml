@@ -8,7 +8,7 @@ services:
       - /www/data/cloud/config:/www/data/cloud/config
     environment:
       - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-Dspring.cloud.config.server.native.searchLocations=/www/data/cloud/config
+      - BOOT_ARGS=-DCONFIG_PROFILE=native -Dspring.cloud.config.server.native.searchLocations=/www/data/cloud/config -DEUREKA_SERVICE_URL=http://10.28.60.163:8761
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -20,9 +20,10 @@ services:
     ports:
       - "8761:8761"
     depends_on:
-          - ms-config
+      - ms-config
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -36,6 +37,7 @@ services:
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8761
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -47,9 +49,11 @@ services:
     ports:
       - "8789:8789"
     depends_on:
+      - ms-config
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
@@ -60,9 +64,11 @@ services:
     ports:
       - "8778:8778"
     depends_on:
+      - ms-config
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
@@ -73,9 +79,11 @@ services:
     ports:
       - "9411:9411"
     depends_on:
+      - ms-config
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
