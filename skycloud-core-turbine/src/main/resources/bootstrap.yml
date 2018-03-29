@@ -8,7 +8,7 @@ spring:
     active: ${CONFIG_PROFILE:dev}
   cloud:
     config:
-      uri: ${CONFIG_SERVICE_URL:http://localhost:8888}/config
+      uri: ${CONFIG_SERVICE_URL:http://localhost:8888/config}
 
 #eureka:
 #  client:
