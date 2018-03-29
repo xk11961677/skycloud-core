@@ -8,7 +8,7 @@ services:
       - /www/data/cloud/config:/www/data/cloud/config
     environment:
       - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_PROFILE=native -Dspring.cloud.config.server.native.searchLocations=/www/data/cloud/config -DEUREKA_SERVICE_URL=http://10.28.60.163:8761 -DSERVER_IP=10.28.60.163 -DSERVER_HOST_NAME=10.28.60.163
+      - BOOT_ARGS=${CONFIG_BOOT_ARGS}
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -21,9 +21,11 @@ services:
       - "8761:8761"
     depends_on:
       - ms-config
+    entrypoint: ./wait-for-it.sh ms-config:8888 -t 600 --
+    command: java -Djava.security.egd=file:/dev/./urandom ${EUREKA_BOOT_ARGS} -jar ms-eureka.jar
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
+      #- BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -37,7 +39,7 @@ services:
       - ms-eureka
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DEUREKA_SERVICE_URL=http://10.28.60.163:8761 -DSERVER_IP=10.28.60.163 -DSERVER_HOST_NAME=10.28.60.163
+      - BOOT_ARGS=${MONITOR_BOOT_ARGS}
       - TZ=Asia/Shanghai
     restart: always
     networks:
@@ -51,9 +53,10 @@ services:
     depends_on:
       - ms-config
       - ms-eureka
+    entrypoint: ./wait-for-it.sh ms-config:8888 -t 600 --
+    command: java -Djava.security.egd=file:/dev/./urandom ${DASHBOARD_BOOT_ARGS} -jar ms-dashboard.jar
     environment:
       - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
@@ -66,9 +69,10 @@ services:
     depends_on:
       - ms-config
       - ms-eureka
+    entrypoint: ./wait-for-it.sh ms-config:8888 -t 600 --
+    command: java -Djava.security.egd=file:/dev/./urandom ${TURBINE_BOOT_ARGS} -jar ms-turbine.jar
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
@@ -81,9 +85,10 @@ services:
     depends_on:
       - ms-config
       - ms-eureka
+    entrypoint: ./wait-for-it.sh ms-config:8888 -t 600 --
+    command: java -Djava.security.egd=file:/dev/./urandom ${ZIPKIN_BOOT_ARGS} -jar ms-zipkin.jar
     environment:
       - JVM_OPTS=-Xmx512m -Xms512m -XX:MaxPermSize=512m
-      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://10.28.60.163:8888
       - TZ=Asia/Shanghai
     networks:
       - front-tier
