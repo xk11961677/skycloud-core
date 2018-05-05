@@ -1,7 +1,7 @@
 version: '2'
 services:
   ms-config:
-    image: 192.168.43.217/sky/skycloud-core-config
+    image: 192.168.43.217:5000/sky/skycloud-core-config
     ports:
       - "8888:8888"
     volumes:
@@ -16,7 +16,7 @@ services:
       - back-tier
 
   ms-eureka:
-    image: 192.168.43.217/sky/skycloud-core-eureka
+    image: 192.168.43.217:5000/sky/skycloud-core-eureka
     ports:
       - "8761:8761"
     depends_on:
@@ -32,7 +32,7 @@ services:
       - back-tier
 
   ms-monitor:
-    image: 192.168.43.217/sky/skycloud-core-monitor
+    image: 192.168.43.217:5000/sky/skycloud-core-monitor
     ports:
       - "8788:8788"
     depends_on:
@@ -47,7 +47,7 @@ services:
       - back-tier
 
   ms-dashboard:
-    image: 192.168.43.217/sky/skycloud-core-dashboard
+    image: 192.168.43.217:5000/sky/skycloud-core-dashboard
     ports:
       - "8789:8789"
     depends_on:
@@ -63,7 +63,7 @@ services:
       - back-tier
 
   ms-turbine:
-    image: 192.168.43.217/sky/skycloud-core-turbine
+    image: 192.168.43.217:5000/sky/skycloud-core-turbine
     ports:
       - "8778:8778"
     depends_on:
@@ -79,7 +79,7 @@ services:
       - back-tier
 
   ms-zipkin:
-    image: 192.168.43.217/sky/skycloud-core-zipkin
+    image: 192.168.43.217:5000/sky/skycloud-core-zipkin
     ports:
       - "9411:9411"
     depends_on:
